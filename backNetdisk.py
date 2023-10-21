@@ -5,6 +5,11 @@ def create_backup():
     src_dir = input("请输入源目录的路径：")
     dest_dir = input("请输入目标目录的路径：")
 
+    # 检查目标目录是否是源目录或其子目录
+    if dest_dir.startswith(src_dir):
+        print("错误：不能将备份保存到源目录或其子目录下。")
+        return
+
     # 创建一个用于记录已备份文件和目录的集合
     backed_up = set()
 
