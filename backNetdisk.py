@@ -46,7 +46,6 @@ def create_backup():
                 backed_up.add(src_file)
                 num_backed_up += 1
                 print(f"已备份 {num_backed_up} 个文件，跳过 {num_skipped} 个文件")
-                print(f"备份路径：{dest_file}")
             except Exception as e:
                 print(f"创建文件 {dest_file} 时出错: {e}")
 
@@ -56,30 +55,6 @@ def create_backup():
             f.write(item + '\n')
 
     print("备份完成！")
-
-    # 遍历目标目录并检查是否有缺失的文件或目录
-    print("开始检查是否有缺失的文件或目录...")
-    for dirpath, dirnames, filenames in os.walk(dest_dir):
-        for dirname in dirnames:
-            src_dirname = dirpath.replace(dest_dir, src_dir) + '/' + dirname
-            if src_dirname not in backed_up:
-                print(f"发现缺失的目录：{src_dirname}")
-                try:
-                    os.makedirs(src_dirname)
-                    print(f"已创建缺失的目录：{src_dirname}")
-                except Exception as e:
-                    print(f"创建缺失的目录 {src_dirname} 时出错: {e}")
-
-        for filename in filenames:
-            src_filename = dirpath.replace(dest_dir, src_dir) + '/' + filename
-            if src_filename not in backed_up:
-                print(f"发现缺失的文件：{src_filename}")
-                try:
-                    with open(src_filename, 'w') as f:
-                        f.write(' ' * 1024)  # 创建1KB大小的文件
-                    print(f"已创建缺失的文件：{src_filename}")
-                except Exception as e:
-                    print(f"创建缺失的文件 {src_filename} 时出错: {e}")
 
 # 使用方法
 create_backup()
